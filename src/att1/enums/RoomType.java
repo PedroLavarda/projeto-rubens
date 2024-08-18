@@ -1,4 +1,4 @@
-package enums;
+package att1.enums;
 
 public enum RoomType {
     SINGLE_ROOM,

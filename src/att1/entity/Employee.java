@@ -1,11 +1,10 @@
-package entity;
+package att1.entity;
 
 import java.util.Date;
 
 public class Employee extends Person {
     private double salary;
     private int workHours;
-    private double bonus;
     private Date hiringDate;
     private boolean isActive;
 
@@ -13,13 +12,12 @@ public class Employee extends Person {
     }
 
     public Employee(int id, String fullName, String email, String password, Date birthDate, String cpf,
-                    double salary, int workHours, double bonus, Date hiringDate) {
+                    double salary, int workHours, Date hiringDate, boolean isActive) {
         super(id, fullName, email, password, birthDate, cpf);
         this.salary = salary;
         this.workHours = workHours;
-        this.bonus = bonus;
         this.hiringDate = hiringDate;
-        this.isActive = true;
+        this.isActive = isActive;
     }
 
     public double getSalary() {
@@ -38,19 +36,16 @@ public class Employee extends Person {
         this.workHours = workHours;
     }
 
-    public double getBonus() {
-        return bonus;
-    }
-
-    public void setBonus(double bonus) {
-        this.bonus = bonus;
-    }
-
     public Date getHiringDate() {
         return hiringDate;
     }
 
     public void setHiringDate(Date hiringDate) {
         this.hiringDate = hiringDate;
+    }
+
+    @Override
+    public String toString() {
+        return getFullName() + " " + getEmail() + " " + getSalary() + " " + getWorkHours() + " " + isActive;
     }
 }

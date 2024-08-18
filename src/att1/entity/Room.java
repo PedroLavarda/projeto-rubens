@@ -1,6 +1,6 @@
-package entity;
+package att1.entity;
 
-import enums.RoomType;
+import att1.enums.RoomType;
 
 public class Room {
     private int id;
@@ -11,14 +11,13 @@ public class Room {
     private double dailyRate;
     private int capacity;
     private int numBeds;
-    private boolean isExclusive;
     private boolean isReserved;
 
     public Room() {
     }
 
     public Room(int id, int roomNumber, String description, double rating, RoomType roomType,
-                double dailyRate, int capacity, int numBeds, boolean isExclusive, boolean isReserved) {
+                double dailyRate, int capacity, int numBeds, boolean isReserved) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.description = description;
@@ -27,7 +26,6 @@ public class Room {
         this.dailyRate = dailyRate;
         this.capacity = capacity;
         this.numBeds = numBeds;
-        this.isExclusive = isExclusive;
         this.isReserved = isReserved;
     }
 
@@ -93,14 +91,6 @@ public class Room {
 
     public void setNumBeds(int numBeds) {
         this.numBeds = numBeds;
-    }
-
-    public boolean isExclusive() {
-        return isExclusive;
-    }
-
-    public void setExclusive(boolean exclusive) {
-        isExclusive = exclusive;
     }
 
     public boolean isReserved() {

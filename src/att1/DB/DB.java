@@ -1,4 +1,4 @@
-package DB;
+package att1.DB;
 
 import java.io.FileInputStream;
 import java.io.IOException;
