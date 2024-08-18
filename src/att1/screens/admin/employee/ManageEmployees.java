@@ -36,6 +36,10 @@ public class ManageEmployees extends JFrame {
 
         registerEmployee = new JButton("Register Employee");
         registerEmployee.setBounds(150, 170, 200, 70);
+        registerEmployee.addActionListener(e -> {
+            dispose();
+            new RegisterEmployee();
+        });
 
         returnBtn = new JButton("Return");
         returnBtn.setBounds(150,300, 200, 50);

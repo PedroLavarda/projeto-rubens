@@ -11,7 +11,7 @@ import java.util.List;
 
 public class EmployeesList extends JFrame {
     private JList<Employee> list;
-    private JButton deleteEmployeeBtn;
+    private JButton deleteEmployeeBtn, returnBtn;
 
     protected final EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
@@ -21,9 +21,10 @@ public class EmployeesList extends JFrame {
 
     private void initComponents() {
         setTitle("Employees List");
-        setSize(new Dimension(700, 600));
+        setSize(new Dimension(425, 600));
         setLayout(new GridBagLayout());
         setLocationRelativeTo(null);
+        setResizable(false);
 
         GridBagConstraints c = new GridBagConstraints();
 
@@ -42,26 +43,39 @@ public class EmployeesList extends JFrame {
             deleteEmployeeBtn.addActionListener(e -> {
                 int selectedIndex = list.getSelectedIndex();
 
-                int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this employee?",
-                        "Warning", JOptionPane.YES_NO_OPTION);
+                if(selectedIndex >= 0) {
+                    int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this employee?",
+                            "Warning", JOptionPane.YES_NO_OPTION);
 
-                if (selectedIndex >= 0 && confirm == JOptionPane.YES_OPTION) {
-                    Employee employee = listModel.get(selectedIndex);
-                    employee.setActive(false);
-                    try {
-                        employeeDAO.update(employee);
-                    } catch (SQLException ex) {
-                        ex.printStackTrace();
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        Employee employee = listModel.get(selectedIndex);
+                        employee.setActive(false);
+                        try {
+                            employeeDAO.update(employee);
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+                        listModel.remove(selectedIndex);
+                        JOptionPane.showMessageDialog(null, "Employee deleted successfully", "Warning", JOptionPane.INFORMATION_MESSAGE);
                     }
-                    listModel.remove(selectedIndex);
-                    JOptionPane.showMessageDialog(null, "Employee deleted successfully", "Warning", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Select an employee first!", "Warning", JOptionPane.INFORMATION_MESSAGE);
                 }
+            });
+
+            returnBtn = new JButton("Return");
+            returnBtn.addActionListener(e -> {
+               dispose();
+               new ManageEmployees();
             });
 
             add(list, c);
             c.gridy = 1;
             c.insets = new Insets(60, 10, 10, 10);
             add(deleteEmployeeBtn, c);
+            c.gridy = 2;
+            c.insets = new Insets(10, 10, 10, 10);
+            add(returnBtn, c);
 
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             setVisible(true);

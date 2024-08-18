@@ -21,6 +21,7 @@ public class AdminPage extends JFrame {
         setSize(new Dimension(700, 600));
         setLayout(null);
         setLocationRelativeTo(null);
+        setResizable(false);
 
         mainTxt = new JLabel("This is the admin page");
         mainTxt.setBounds(230,0, 300, 100);
