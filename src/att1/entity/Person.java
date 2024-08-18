@@ -7,18 +7,18 @@ public abstract class Person {
     private String fullName;
     private String email;
     private String password;
-    private Date birthDate;
+    private int age;
     private String cpf;
 
     public Person() {
     }
 
-    public Person(int id, String fullName, String email, String password, Date birthDate, String cpf) {
+    public Person(int id, String fullName, String email, String password, int age, String cpf) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.birthDate = birthDate;
+        this.age = age;
         this.cpf = cpf;
     }
 
@@ -54,12 +54,12 @@ public abstract class Person {
         this.password = password;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public int getAge() {
+        return age;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getCpf() {

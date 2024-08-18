@@ -11,9 +11,9 @@ public class Employee extends Person {
     public Employee() {
     }
 
-    public Employee(int id, String fullName, String email, String password, Date birthDate, String cpf,
+    public Employee(int id, String fullName, String email, String password, int age, String cpf,
                     double salary, int workHours, Date hiringDate, boolean isActive) {
-        super(id, fullName, email, password, birthDate, cpf);
+        super(id, fullName, email, password, age, cpf);
         this.salary = salary;
         this.workHours = workHours;
         this.hiringDate = hiringDate;
@@ -42,6 +42,14 @@ public class Employee extends Person {
 
     public void setHiringDate(Date hiringDate) {
         this.hiringDate = hiringDate;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     @Override

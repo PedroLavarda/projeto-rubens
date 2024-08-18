@@ -28,14 +28,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             String fullname = rs.getString("fullName");
             String email = rs.getString("email");
             String password = rs.getString("password");
-            Date birthday = rs.getDate("birthDate");
+            int age = rs.getInt("age");
             String cpf = rs.getString("cpf");
             double salary = rs.getDouble("salary");
             int workHours = rs.getInt("workHours");
             Date hiringDate = rs.getDate("hiringDate");
             boolean isActive = rs.getBoolean("isActive");
 
-            employee = new Employee(eid, fullname, email, password, birthday, cpf, salary, workHours, hiringDate, isActive);
+            employee = new Employee(eid, fullname, email, password, age, cpf, salary, workHours, hiringDate, isActive);
         }
 
         return employee;
@@ -53,14 +53,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             String fullname = rs.getString("name");
             String email = rs.getString("email");
             String password = rs.getString("password");
-            Date birthday = new Date();
+            int age = rs.getInt("age");
             String cpf = rs.getString("cpf");
             double salary = rs.getDouble("salary");
             int workHours = rs.getInt("workHours");
             Date hiringDate = rs.getDate("hiringDate");
             boolean isActive = rs.getBoolean("isActive");
 
-            employees.add(new Employee(eid, fullname, email, password, birthday, cpf, salary, workHours, hiringDate, isActive));
+            employees.add(new Employee(eid, fullname, email, password, age, cpf, salary, workHours, hiringDate, isActive));
         }
 
         return employees;
@@ -78,6 +78,19 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     public int update(Employee employee) throws SQLException {
+        Connection conn = DB.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement("UPDATE EMPLOYEES SET name = ?, email = ?, age = ?, cpf = ?, salary = ?, workHours = ?, isActive = ? WHERE id = ?");
+        stmt.setString(1, employee.getFullName());
+        stmt.setString(2, employee.getEmail());
+        stmt.setInt(3, employee.getAge());
+        stmt.setString(4, employee.getCpf());
+        stmt.setDouble(5, employee.getSalary());
+        stmt.setInt(6, employee.getWorkHours());
+        stmt.setBoolean(7, employee.isActive());
+        stmt.setInt(8, employee.getId());
+
+        stmt.executeUpdate();
         return 0;
     }
 

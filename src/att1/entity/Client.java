@@ -11,8 +11,8 @@ public class Client extends Person {
     public Client() {
     }
 
-    public Client(int id, String fullName, String email, String password, Date birthDate, String cpf) {
-        super(id, fullName, email, password, birthDate, cpf);
+    public Client(int id, String fullName, String email, String password, int age, String cpf) {
+        super(id, fullName, email, password, age, cpf);
     }
 
     public boolean isReserving() {
