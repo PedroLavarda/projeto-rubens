@@ -69,11 +69,24 @@ public class EmployeeDAOImpl implements DAO<Employee> {
 
     @Override
     public int insert(Employee employee) throws SQLException {
-        return 0;
-    }
+        Connection conn = DB.getConnection();
 
-    @Override
-    public int save(Employee employee) throws SQLException {
+        PreparedStatement stmt =
+                conn.prepareStatement("INSERT INTO EMPLOYEES (name, email, password, age, cpf, salary, workHours, hiringDate, isActive, idAddress)" +
+                " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+        stmt.setString(1, employee.getFullName());
+        stmt.setString(2, employee.getEmail());
+        stmt.setString(3, employee.getPassword());
+        stmt.setInt(4, employee.getAge());
+        stmt.setString(5, employee.getCpf());
+        stmt.setDouble(6, employee.getSalary());
+        stmt.setInt(7, employee.getWorkHours());
+        stmt.setDate(8, employee.getHiringDate());
+        stmt.setBoolean(9, true);
+        stmt.setInt(10, employee.getAddress().getId());
+
+        ResultSet rs = stmt.executeQuery();
         return 0;
     }
 

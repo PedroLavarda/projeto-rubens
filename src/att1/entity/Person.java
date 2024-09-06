@@ -1,7 +1,5 @@
 package att1.entity;
 
-import java.util.Date;
-
 public abstract class Person {
     private int id;
     private String fullName;
@@ -9,6 +7,7 @@ public abstract class Person {
     private String password;
     private int age;
     private String cpf;
+    private Address address;
 
     public Person() {
     }
@@ -68,5 +67,13 @@ public abstract class Person {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 }

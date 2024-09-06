@@ -36,8 +36,8 @@ public class Employee extends Person {
         this.workHours = workHours;
     }
 
-    public Date getHiringDate() {
-        return hiringDate;
+    public java.sql.Date getHiringDate() {
+        return (java.sql.Date) hiringDate;
     }
 
     public void setHiringDate(Date hiringDate) {
