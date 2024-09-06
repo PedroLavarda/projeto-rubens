@@ -1,6 +1,7 @@
 package att1.DAO.implementation;
 
-import att1.DAO.EmployeeDAO;
+import att1.DAO.DAO;
+
 import att1.DB.DB;
 import att1.entity.Employee;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class EmployeeDAOImpl implements EmployeeDAO {
+public class EmployeeDAOImpl implements DAO<Employee> {
     @Override
     public Employee get(int id) throws SQLException {
         Connection conn = DB.getConnection();

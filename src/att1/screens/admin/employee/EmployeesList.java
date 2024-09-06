@@ -1,6 +1,6 @@
 package att1.screens.admin.employee;
 
-import att1.DAO.EmployeeDAO;
+import att1.DAO.DAO;
 import att1.DAO.implementation.EmployeeDAOImpl;
 import att1.entity.Employee;
 
@@ -13,7 +13,7 @@ public class EmployeesList extends JFrame {
     private JList<Employee> list;
     private JButton deleteEmployeeBtn, returnBtn;
 
-    protected final EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+    protected final DAO<Employee> employeeDAO = new EmployeeDAOImpl();
 
     public EmployeesList () {
         initComponents();
