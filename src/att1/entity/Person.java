@@ -12,13 +12,14 @@ public abstract class Person {
     public Person() {
     }
 
-    public Person(int id, String fullName, String email, String password, int age, String cpf) {
+    public Person(int id, String fullName, String email, String password, int age, String cpf, Address address) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.age = age;
         this.cpf = cpf;
+        this.address = address;
     }
 
     public int getId() {

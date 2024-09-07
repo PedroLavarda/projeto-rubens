@@ -12,8 +12,8 @@ public class Employee extends Person {
     }
 
     public Employee(int id, String fullName, String email, String password, int age, String cpf,
-                    double salary, int workHours, Date hiringDate, boolean isActive) {
-        super(id, fullName, email, password, age, cpf);
+                    double salary, int workHours, Date hiringDate, boolean isActive, Address address) {
+        super(id, fullName, email, password, age, cpf, address);
         this.salary = salary;
         this.workHours = workHours;
         this.hiringDate = hiringDate;

@@ -11,8 +11,12 @@ public class Client extends Person {
     public Client() {
     }
 
-    public Client(int id, String fullName, String email, String password, int age, String cpf) {
-        super(id, fullName, email, password, age, cpf);
+    public Client(int id, String fullName, String email, String password, int age, String cpf, Address address, boolean isReserving, boolean isBanned, Date lastReservationDate, String employeeNotes) {
+        super(id, fullName, email, password, age, cpf, address);
+        this.isReserving = isReserving;
+        this.isBanned = isBanned;
+        this.lastReservationDate = lastReservationDate;
+        this.employeeNotes = employeeNotes;
     }
 
     public boolean isReserving() {

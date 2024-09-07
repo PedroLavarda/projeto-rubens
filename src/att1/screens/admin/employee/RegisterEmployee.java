@@ -1,9 +1,21 @@
 package att1.screens.admin.employee;
 
+import att1.dao.DAO;
+import att1.dao.implementation.EmployeeDAOImpl;
+import att1.entity.Address;
+import att1.entity.Employee;
 import att1.screens.admin.AdminPage;
+import att1.screens.auth.LoginPage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 
 public class RegisterEmployee extends JFrame {
     private JLabel mainTxt, nameLbl, emailLbl, passwordLbl, ageLbl, cpfLbl, salaryLbl, workHoursLbl;
@@ -13,6 +25,8 @@ public class RegisterEmployee extends JFrame {
     private JPasswordField passwordField;
 
     private JButton submitBtn, returnBtn;
+
+    protected final DAO<Employee> employeeDAO = new EmployeeDAOImpl();
 
     public RegisterEmployee() {
         initComponents();
@@ -127,8 +141,30 @@ public class RegisterEmployee extends JFrame {
 
         // seta funcoes dos botoes
 
-        submitBtn.addActionListener(e -> {
+        submitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(emailField.getText().isBlank() || nameField.getText().isBlank() || new String(passwordField.getPassword()).isBlank()
+                || ageField.getText().isBlank() || cpfField.getText().isBlank() || salaryField.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(RegisterEmployee.this, "Please, fill all the required" +
+                            "fields before submitting.");
+                    return;
+                }
 
+                if(streetField.getText().isBlank() || houseNumberField.getText().isBlank() || countryField.getText().isBlank()
+                || stateField.getText().isBlank() || cityField.getText().isBlank() || zipField.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(RegisterEmployee.this, "Please, fill all the address" +
+                            "fields before submitting.");
+                    return;
+                }
+
+                try {
+                    employeeDAO.insert(new Employee(0, nameField.getText(), emailField.getText(), new String(passwordField.getPassword()), Integer.parseInt(ageField.getText()), cpfField.getText(),
+                            Double.parseDouble(salaryField.getText()), 10, Date.valueOf(LocalDate.now()), true, new Address()));
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
         });
 
         returnBtn.addActionListener(e -> {
