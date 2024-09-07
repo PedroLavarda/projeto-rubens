@@ -1,7 +1,7 @@
 package att1.screens.admin.employee;
 
-import att1.DAO.DAO;
-import att1.DAO.implementation.EmployeeDAOImpl;
+import att1.dao.DAO;
+import att1.dao.implementation.EmployeeDAOImpl;
 import att1.entity.Employee;
 
 import javax.swing.*;

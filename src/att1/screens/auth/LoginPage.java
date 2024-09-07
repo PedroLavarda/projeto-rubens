@@ -1,6 +1,6 @@
 package att1.screens.auth;
 
-import att1.DB.DB;
+import att1.db.DB;
 import att1.screens.client.ClientPage;
 import att1.screens.admin.AdminPage;
 

@@ -1,8 +1,8 @@
-package att1.DAO.implementation;
+package att1.dao.implementation;
 
-import att1.DAO.DAO;
+import att1.dao.DAO;
 
-import att1.DB.DB;
+import att1.db.DB;
 import att1.entity.Employee;
 
 import java.sql.Connection;
