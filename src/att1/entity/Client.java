@@ -35,8 +35,8 @@ public class Client extends Person {
         isBanned = banned;
     }
 
-    public Date getLastReservationDate() {
-        return lastReservationDate;
+    public java.sql.Date getLastReservationDate() {
+        return (java.sql.Date) lastReservationDate;
     }
 
     public void setLastReservationDate(Date lastReservationDate) {
@@ -49,5 +49,10 @@ public class Client extends Person {
 
     public void setEmployeeNotes(String employeeNotes) {
         this.employeeNotes = employeeNotes;
+    }
+
+    @Override
+    public String toString() {
+        return getFullName() + " " + getEmail() + " " + getCpf() + " " + getLastReservationDate() + " " + isBanned();
     }
 }

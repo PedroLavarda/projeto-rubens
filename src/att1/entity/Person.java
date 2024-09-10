@@ -77,4 +77,17 @@ public abstract class Person {
     public void setAddress(Address address) {
         this.address = address;
     }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", age=" + age +
+                ", cpf='" + cpf + '\'' +
+                ", address=" + address +
+                '}';
+    }
 }

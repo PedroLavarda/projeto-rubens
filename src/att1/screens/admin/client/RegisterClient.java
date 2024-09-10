@@ -1,11 +1,11 @@
-package att1.screens.admin.employee;
+package att1.screens.admin.client;
 
 import att1.dao.AddressDAO;
 import att1.dao.DAO;
 import att1.dao.implementation.AddressDAOImpl;
-import att1.dao.implementation.EmployeeDAOImpl;
+import att1.dao.implementation.ClientDAOImpl;
 import att1.entity.Address;
-import att1.entity.Employee;
+import att1.entity.Client;
 import att1.screens.admin.AdminPage;
 
 import javax.swing.*;
@@ -16,30 +16,30 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 
-public class RegisterEmployee extends JFrame {
+public class RegisterClient extends JFrame {
     private JLabel mainTxt, nameLbl, emailLbl, passwordLbl, ageLbl, cpfLbl, salaryLbl, workHoursLbl;
     private JLabel  addressTxt, streetLbl, houseNumberLbl, countryLbl, stateLbl, cityLbl, zipLbl;
-    private JTextField nameField, emailField, ageField, cpfField, salaryField, workHoursField;
+    private JTextField nameField, emailField, ageField, cpfField;
     private JTextField streetField, houseNumberField, countryField, stateField, cityField, zipField;
     private JPasswordField passwordField;
 
     private JButton submitBtn, returnBtn;
 
-    protected final DAO<Employee> employeeDAO = new EmployeeDAOImpl();
+    protected final DAO<Client> clientDAO = new ClientDAOImpl();
     protected final AddressDAO addressDao = new AddressDAOImpl();
 
-    public RegisterEmployee() {
+    public RegisterClient() {
         initComponents();
     }
 
     private void initComponents() {
-        setTitle("Register Employee");
+        setTitle("Register Client");
         setSize(new Dimension(600, 450));
         setLayout(null);
         setLocationRelativeTo(null);
         setResizable(false);
 
-        mainTxt = new JLabel("Register Employee Page");
+        mainTxt = new JLabel("Client Employee Page");
         mainTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
         mainTxt.setBounds(200, 1, 200, 60);
 
@@ -54,8 +54,6 @@ public class RegisterEmployee extends JFrame {
         ageLbl.setBounds(120, 100, 100, 30);
         cpfLbl = new JLabel("CPF:");
         cpfLbl.setBounds(260, 100, 100, 30);
-        salaryLbl = new JLabel("Salary:");
-        salaryLbl.setBounds(400, 100, 100, 30);
 
         nameField = new JTextField();
         nameField.setBounds(120, 70, 110, 30);
@@ -68,8 +66,6 @@ public class RegisterEmployee extends JFrame {
         ageField.setBounds(120, 130, 110, 30);
         cpfField = new JTextField();
         cpfField.setBounds(260, 130, 110, 30);
-        salaryField = new JTextField();
-        salaryField.setBounds(400, 130, 110, 30);
 
         // informações do endereço do employee
         addressTxt = new JLabel("Address information:");
@@ -114,7 +110,6 @@ public class RegisterEmployee extends JFrame {
         add(emailLbl);
         add(passwordLbl);
         add(ageLbl);
-        add(salaryLbl);
         add(cpfLbl);
 
         add(addressTxt);
@@ -130,7 +125,6 @@ public class RegisterEmployee extends JFrame {
         add(passwordField);
         add(ageField);
         add(cpfField);
-        add(salaryField);
 
         add(streetField);
         add(houseNumberField);
@@ -145,15 +139,15 @@ public class RegisterEmployee extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(emailField.getText().isBlank() || nameField.getText().isBlank() || new String(passwordField.getPassword()).isBlank()
-                || ageField.getText().isBlank() || cpfField.getText().isBlank() || salaryField.getText().isBlank()) {
-                    JOptionPane.showMessageDialog(RegisterEmployee.this, "Please, fill all the required" +
+                        || ageField.getText().isBlank() || cpfField.getText().isBlank()){
+                    JOptionPane.showMessageDialog(RegisterClient.this, "Please, fill all the required" +
                             "fields before submitting.");
                     return;
                 }
 
                 if(streetField.getText().isBlank() || houseNumberField.getText().isBlank() || countryField.getText().isBlank()
-                || stateField.getText().isBlank() || cityField.getText().isBlank() || zipField.getText().isBlank()) {
-                    JOptionPane.showMessageDialog(RegisterEmployee.this, "Please, fill all the address" +
+                        || stateField.getText().isBlank() || cityField.getText().isBlank() || zipField.getText().isBlank()) {
+                    JOptionPane.showMessageDialog(RegisterClient.this, "Please, fill all the address" +
                             "fields before submitting.");
                     return;
                 }
@@ -165,11 +159,11 @@ public class RegisterEmployee extends JFrame {
                     addressDao.insert(address);
                     address = addressDao.getAddress(address);
 
-                    employeeDAO.insert(new Employee(0, nameField.getText(), emailField.getText(), new String(passwordField.getPassword()), Integer.parseInt(ageField.getText()), cpfField.getText(),
-                            Double.parseDouble(salaryField.getText()), 10, Date.valueOf(LocalDate.now()), true, address));
+                    clientDAO.insert(new Client(0, nameField.getText(), emailField.getText(), new String(passwordField.getPassword()), Integer.parseInt(ageField.getText()), cpfField.getText(),
+                            address, false, false, Date.valueOf(LocalDate.now()), "Empty"));
 
                     dispose();
-                    new RegisterEmployee();
+                    new RegisterClient();
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }

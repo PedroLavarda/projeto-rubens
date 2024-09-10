@@ -90,7 +90,7 @@ public class EmployeeDAOImpl implements DAO<Employee> {
         stmt.setInt(7, employee.getWorkHours());
         stmt.setDate(8, employee.getHiringDate());
         stmt.setBoolean(9, true);
-        stmt.setInt(10, 1);
+        stmt.setInt(10, employee.getAddress().getId());
 
         stmt.execute();
         return 0;
@@ -108,7 +108,7 @@ public class EmployeeDAOImpl implements DAO<Employee> {
         stmt.setDouble(5, employee.getSalary());
         stmt.setInt(6, employee.getWorkHours());
         stmt.setBoolean(7, employee.isActive());
-        stmt.setInt(8, 1);
+        stmt.setInt(8, employee.getAddress().getId());
         stmt.setInt(9, employee.getId());
 
         stmt.executeUpdate();
