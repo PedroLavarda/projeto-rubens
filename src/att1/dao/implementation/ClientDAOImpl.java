@@ -116,6 +116,13 @@ public class ClientDAOImpl implements DAO<Client> {
 
     @Override
     public int delete(int id) throws SQLException {
+        Connection conn = DB.getConnection();
+
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM CLIENTS WHERE id = ?");
+
+        stmt.setInt(1, id);
+
+        stmt.execute();
         return 0;
     }
 }

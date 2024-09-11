@@ -100,4 +100,9 @@ public class Room {
     public void setReserved(boolean reserved) {
         isReserved = reserved;
     }
+
+    @Override
+    public String toString() {
+        return getRoomNumber() + " - " + getDescription() + " - " + getDailyRate() + " - " + getRating() + " - " + isReserved();
+    }
 }

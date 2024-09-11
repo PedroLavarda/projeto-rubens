@@ -3,7 +3,6 @@ package att1.dao.implementation;
 import att1.dao.AddressDAO;
 import att1.db.DB;
 import att1.entity.Address;
-import att1.entity.Employee;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
