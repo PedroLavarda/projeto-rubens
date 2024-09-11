@@ -2,6 +2,7 @@ package att1.screens.admin;
 
 import att1.screens.admin.client.ManageClients;
 import att1.screens.admin.employee.ManageEmployees;
+import att1.screens.admin.reserve.ManageReserves;
 import att1.screens.admin.room.ManageRooms;
 import att1.screens.auth.LoginPage;
 
@@ -54,6 +55,13 @@ public class AdminPage extends JFrame {
 
         reservesBtn = new JButton("Manage Reserves");
         reservesBtn.setBounds(77,270, 250, 100);
+        reservesBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new ManageReserves();
+            }
+        });
 
 
         roomsBtn = new JButton("Manage Rooms");
