@@ -16,16 +16,23 @@ import java.util.List;
 public class ClientDAOImpl implements DAO<Client> {
     @Override
     public Client get(int id) throws SQLException {
+        // Abre conexao
         Connection conn = DB.getConnection();
+
+        // Inicia o resultado client como null
         Client client = null;
 
+        // Prepara query
         PreparedStatement stmt = conn.prepareStatement("SELECT c.*, a.id as idaddress, a.street, a.house_number, a.country, a.state, a.city, a.zip_code FROM CLIENTS c " +
                 "INNER JOIN ADDRESS a ON a.id = c.id_address WHERE id = ?");
 
+        // Seta os campos necessarios para query
         stmt.setInt(1, id);
 
+        // Executa a query
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
+            // Se tiver resultado ele mapeia o resultado aqui, e faz com que o client seja o novo cliente que a gente achou
             int eid = rs.getInt("id");
             String fullname = rs.getString("name");
             String email = rs.getString("email");
@@ -41,17 +48,22 @@ public class ClientDAOImpl implements DAO<Client> {
             client = new Client(eid, fullname, email, password, age, cpf, address, isReserving, isBanned, lastReservationDate, employeeNotes);
         }
 
+        // retorna o client, se nao achou nada retorna null
         return client;
     }
 
     @Override
     public List<Client> getAll() throws SQLException {
+        // abre conexao e inicia o array clients como vazio pra ser o arry de resultados
         List<Client> clients = new ArrayList<>();
         Connection conn = DB.getConnection();
+        // prepara a query
         PreparedStatement stmt = conn.prepareStatement("SELECT c.*, a.id as idaddress, a.street, a.house_number, a.country, a.state, a.city, a.zip_code FROM CLIENTS c INNER JOIN ADDRESS a ON a.id = c.id_address");
+        // executa a query
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {
+            // enquanto tiver resultados ele vai mapear os clientes e adicionar na lista de clients
             int eid = rs.getInt("id");
             String fullname = rs.getString("name");
             String email = rs.getString("email");
@@ -68,17 +80,21 @@ public class ClientDAOImpl implements DAO<Client> {
             clients.add(new Client(eid, fullname, email, password, age, cpf, address, isReserving, isBanned, lastReservationDate, employeeNotes));
         }
 
+        // retorna a lista
         return clients;
     }
 
     @Override
     public int insert(Client client) throws SQLException {
+        // abre conexao com o banco
         Connection conn = DB.getConnection();
 
+        // prepara a query
         PreparedStatement stmt =
                 conn.prepareStatement("INSERT INTO CLIENTS (name, email, password, age, cpf, isReserving, isBanned, lastReservationDate, employeeNotes, id_address)" +
                         " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+        // seta os atributos pra query
         stmt.setString(1, client.getFullName());
         stmt.setString(2, client.getEmail());
         stmt.setString(3, client.getPassword());
@@ -90,15 +106,20 @@ public class ClientDAOImpl implements DAO<Client> {
         stmt.setString(9, client.getEmployeeNotes());
         stmt.setInt(10, client.getAddress().getId());
 
+        // executa o insert
         stmt.execute();
         return 0;
     }
 
     @Override
     public int update(Client client) throws SQLException {
+        // abre conexao com o banco
         Connection conn = DB.getConnection();
 
+        // prepara a query
         PreparedStatement stmt = conn.prepareStatement("UPDATE CLIENTS SET name = ?, email = ?, age = ?, cpf = ?, isReserving = ?, isBanned = ?, lastReservationDate = ?, employeeNotes = ?, id_address = ? WHERE id = ?");
+
+        // seta os atributos pra query
         stmt.setString(1, client.getFullName());
         stmt.setString(2, client.getEmail());
         stmt.setInt(3, client.getAge());
@@ -110,18 +131,23 @@ public class ClientDAOImpl implements DAO<Client> {
         stmt.setInt(9, client.getAddress().getId());
         stmt.setInt(10, client.getId());
 
+        // executa a query
         stmt.executeUpdate();
         return 0;
     }
 
     @Override
     public int delete(int id) throws SQLException {
+        // abre conexao com o banco
         Connection conn = DB.getConnection();
 
+        // prepara a query
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM CLIENTS WHERE id = ?");
 
+        // seta atribuutos da query
         stmt.setInt(1, id);
 
+        // eexecuta a query
         stmt.execute();
         return 0;
     }

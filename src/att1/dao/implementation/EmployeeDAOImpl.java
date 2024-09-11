@@ -17,16 +17,21 @@ import java.util.List;
 public class EmployeeDAOImpl implements DAO<Employee> {
     @Override
     public Employee get(int id) throws SQLException {
+        // abre conexao
         Connection conn = DB.getConnection();
         Employee employee = null;
 
+        // prepara a query
         PreparedStatement stmt = conn.prepareStatement("SELECT e.*, a.id as idaddress, a.street, a.house_number, a.country, a.state, a.city, a.zip_code FROM EMPLOYEES e " +
                 "INNER JOIN ADDRESS a ON a.id = e.id_address WHERE id = ?");
 
+        // seta os atributos da query
         stmt.setInt(1, id);
 
+        // executa a query
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
+            // se tiver resultado ele mapeia o empregado e seta ele como a variavel employee
             int eid = rs.getInt("id");
             String fullname = rs.getString("fullName");
             String email = rs.getString("email");
@@ -43,17 +48,24 @@ public class EmployeeDAOImpl implements DAO<Employee> {
             employee = new Employee(eid, fullname, email, password, age, cpf, salary, workHours, hiringDate, isActive, address);
         }
 
+        // retorna o employee, ou null
         return employee;
     }
 
     @Override
     public List<Employee> getAll() throws SQLException {
+        // abre conexao
         List<Employee> employees = new ArrayList<>();
         Connection conn = DB.getConnection();
+
+        // prepara a query
         PreparedStatement stmt = conn.prepareStatement("SELECT e.*, a.id as idaddress, a.street, a.house_number, a.country, a.state, a.city, a.zip_code FROM EMPLOYEES e INNER JOIN ADDRESS a ON a.id = e.id_address");
+
+        // executa a query
         ResultSet rs = stmt.executeQuery();
 
         while(rs.next()) {
+            // se tiver resultado ele mapeia o empregado e adiciona na lista employees
             int eid = rs.getInt("id");
             String fullname = rs.getString("name");
             String email = rs.getString("email");
@@ -70,17 +82,21 @@ public class EmployeeDAOImpl implements DAO<Employee> {
             employees.add(new Employee(eid, fullname, email, password, age, cpf, salary, workHours, hiringDate, isActive, address));
         }
 
+        // retorna a lista de employees
         return employees;
     }
 
     @Override
     public int insert(Employee employee) throws SQLException {
+        // abre conexao
         Connection conn = DB.getConnection();
 
+        // prepara a query
         PreparedStatement stmt =
                 conn.prepareStatement("INSERT INTO EMPLOYEES (name, email, password, age, cpf, salary, workHours, hiringDate, isActive, id_address)" +
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
+        // seta os atributos da query
         stmt.setString(1, employee.getFullName());
         stmt.setString(2, employee.getEmail());
         stmt.setString(3, employee.getPassword());
@@ -92,15 +108,20 @@ public class EmployeeDAOImpl implements DAO<Employee> {
         stmt.setBoolean(9, true);
         stmt.setInt(10, employee.getAddress().getId());
 
+        // executa a query
         stmt.execute();
         return 0;
     }
 
     @Override
     public int update(Employee employee) throws SQLException {
+        // abre conexao
         Connection conn = DB.getConnection();
 
+        // prepara a query
         PreparedStatement stmt = conn.prepareStatement("UPDATE EMPLOYEES SET name = ?, email = ?, age = ?, cpf = ?, salary = ?, workHours = ?, isActive = ?, id_address = ? WHERE id = ?");
+
+        // seta os atributos da query
         stmt.setString(1, employee.getFullName());
         stmt.setString(2, employee.getEmail());
         stmt.setInt(3, employee.getAge());
@@ -111,12 +132,14 @@ public class EmployeeDAOImpl implements DAO<Employee> {
         stmt.setInt(8, employee.getAddress().getId());
         stmt.setInt(9, employee.getId());
 
+        // executa a query
         stmt.executeUpdate();
         return 0;
     }
 
     @Override
     public int delete(int id) throws SQLException {
+        // abre conexao
         return 0;
     }
 }
