@@ -191,6 +191,7 @@ public class RegisterReserve extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     Room room = (Room) roomChoice.getSelectedItem();
+
                     Employee employee = (Employee) employeeChoice.getSelectedItem();
                     Reserve reserve = new Reserve(0, Double.parseDouble(priceField.getText()), room, Date.valueOf(LocalDate.now()),
                             Date.valueOf(LocalDate.now()), employee, clients);
@@ -198,13 +199,20 @@ public class RegisterReserve extends JFrame {
                     // isnere a reserva criada no banco
                     reserveDAO.insert(reserve);
 
+
                     // pega o id da reserva
                     int idReserv = reserveDAO.returnReserveId(reserve);
 
                     // coloca os cliente na tabela de relação da reserva
                     for(Client cc : clients) {
                         reserveClientDAO.insertClientInReserve(cc.getId(), idReserv);
+                        cc.setReserving(true);
+                        clientDAO.update(cc);
                     }
+
+                    room.setReserved(true);
+
+                    roomDAO.update(room);
 
                     dispose();
                     new RegisterReserve();

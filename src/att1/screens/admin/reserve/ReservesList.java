@@ -36,6 +36,8 @@ public class ReservesList extends JFrame{
         DefaultListModel<Reserve> listModel = new DefaultListModel<>();
         list = new JList<>(listModel);
         try {
+
+            // pego todas as reservas
             List<Reserve> reserves = reservesDAO.getAll();
 
             for (Reserve reserve : reserves) {
@@ -44,17 +46,22 @@ public class ReservesList extends JFrame{
 
             deleteReserveBtn = new JButton("Delete Reserve");
             deleteReserveBtn.addActionListener(e -> {
+                // pego a reserva que o usuario selecionou
                 int selectedIndex = list.getSelectedIndex();
 
+                // se estiver algum selecionado
                 if(selectedIndex >= 0) {
                     int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this reserve?",
                             "Warning", JOptionPane.YES_NO_OPTION);
 
+                    // se sim ele entra aqui pra deletar
                     if (confirm == JOptionPane.YES_OPTION) {
                         Reserve reserve = listModel.get(selectedIndex);
                         try {
+                            // acha os clients da reserve
                             List<Client> clients = reserveClientDAO.findAllClientsInReserve(reserve.getId());
 
+                            // se tiver, deleta eles
                             if(clients != null) {
                                 for (Client client : clients) {
                                     reserveClientDAO.deleteClientInReserve(client.getId(), reserve.getId());

@@ -21,9 +21,13 @@ public class ManageRooms extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // delcara os elementos da pagina
+
         maintxt = new JLabel("Rooms Management Page");
         maintxt.setBounds(140, 0, 250, 50);
         maintxt.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+        // os botoes todos em todas as ManageEntity, descartam a pagina atual e abrem a nova pagina de acordo com a necessidade;
 
         roomsList = new JButton("Rooms List");
         roomsList.setBounds(150, 70, 200, 70);

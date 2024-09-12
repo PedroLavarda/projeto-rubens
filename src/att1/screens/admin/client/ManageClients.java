@@ -15,6 +15,8 @@ public class ManageClients extends JFrame {
     }
 
     private void initComponents() {
+        // settings basicas da pagina
+
         setTitle("Clients Management Page");
         setSize(new Dimension(500, 400));
         setLayout(null);

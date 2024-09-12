@@ -2,10 +2,14 @@ package att1.dao.implementation;
 
 import att1.dao.DAO;
 
+import att1.dao.EmployeeDAO;
 import att1.db.DB;
 import att1.entity.Address;
 import att1.entity.Employee;
+import att1.screens.admin.AdminPage;
+import att1.screens.auth.LoginPage;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class EmployeeDAOImpl implements DAO<Employee> {
+public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public Employee get(int id) throws SQLException {
         // abre conexao
@@ -141,5 +145,29 @@ public class EmployeeDAOImpl implements DAO<Employee> {
     public int delete(int id) throws SQLException {
         // abre conexao
         return 0;
+    }
+
+    @Override
+    public boolean login(String email, String password) throws SQLException{
+        Connection conn = DB.getConnection();
+        Employee employee = null;
+
+        // prepara a query
+        PreparedStatement stmt = conn.prepareStatement("select * from EMPLOYEES where email = ? and password = ?");
+
+        // seta os atributos da query
+        stmt.setString(1, email);
+        stmt.setString(2, password);
+
+
+        // executa a query
+        ResultSet rs = stmt.executeQuery();
+
+            if(!rs.isBeforeFirst()) {
+                return false;
+            }
+
+            return true;
+
     }
 }

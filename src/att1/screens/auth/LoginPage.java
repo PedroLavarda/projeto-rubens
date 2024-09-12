@@ -1,5 +1,7 @@
 package att1.screens.auth;
 
+import att1.dao.EmployeeDAO;
+import att1.dao.implementation.EmployeeDAOImpl;
 import att1.db.DB;
 import att1.screens.client.ClientPage;
 import att1.screens.admin.AdminPage;
@@ -19,6 +21,8 @@ public class LoginPage extends JFrame {
     private JPasswordField password;
     private JLabel emailLbl, passwordLbl, mainTxtLbl, userTypeLbl;
     private JCheckBox userType;
+
+    protected final EmployeeDAO employeeDAO = new EmployeeDAOImpl();
 
     public LoginPage() {
         initComponents();
@@ -50,37 +54,22 @@ public class LoginPage extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Connection conn = DB.getConnection();
-
                 if(new String(password.getPassword()).isBlank() || email.getText().isBlank()) {
                     JOptionPane.showMessageDialog(LoginPage.this, "Please enter a valid email address or password");
                     return;
                 }
 
-                String sql = "select * from EMPLOYEES where email = ? and password = ?";
-
                 try {
-                    PreparedStatement stmt = conn.prepareStatement(sql);
+                    boolean logged = employeeDAO.login(email.getText(), new String(password.getPassword()));
 
-                    stmt.setString(1, email.getText());
-                    stmt.setString(2, new String(password.getPassword()));
-
-                    ResultSet rs = stmt.executeQuery();
-
-                    if(!rs.isBeforeFirst()) {
-                        JOptionPane.showMessageDialog(LoginPage.this, "Could not find an account with the provided " +
-                                "email address or password");
-                        rs.close();
-                        stmt.close();
-                        return;
+                    if(logged) {
+                        dispose();
+                        new AdminPage();
+                    } else {
+                        JOptionPane.showMessageDialog(LoginPage.this, "Invalid email or password");
                     }
-
-                    dispose();
-
-                    new AdminPage();
-
                 } catch (SQLException ex) {
-                    System.out.println(ex.getMessage());
+                    throw new RuntimeException(ex);
                 }
             }
         });

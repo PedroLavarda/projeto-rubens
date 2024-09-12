@@ -16,15 +16,19 @@ public class ManageEmployees extends JFrame {
     }
 
     private void initComponents() {
+        // declara settigns basicas da pagina
         setTitle("Employees Management Page");
         setSize(new Dimension(500, 400));
         setLayout(null);
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // declara elementos da pagina + tamanho, texto etc
         maintxt = new JLabel("Employee Management Page");
         maintxt.setBounds(140, 0, 250, 50);
         maintxt.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+        // os botoes em todas as classes ManageEntity, discartam a pagina atual e abrem uma nova pagina
 
         employeesList = new JButton("Employees List");
         employeesList.setBounds(150, 70, 200, 70);

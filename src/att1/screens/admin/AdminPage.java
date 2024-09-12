@@ -26,10 +26,13 @@ public class AdminPage extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // declara os elementos da pagina
+
         mainTxt = new JLabel("This is the admin page");
         mainTxt.setBounds(230,0, 300, 100);
         mainTxt.setFont(new Font("Tahoma", Font.BOLD, 20));
 
+        // todos os botoes na pagina admin, descartam a pagina atual e abrem a nova pagina.
 
         employeesBtn = new JButton("Manage Employees");
         employeesBtn.setBounds(77,100, 250, 100);

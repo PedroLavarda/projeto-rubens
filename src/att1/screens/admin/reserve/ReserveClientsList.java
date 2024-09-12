@@ -28,6 +28,7 @@ public class ReserveClientsList extends JFrame {
         GridBagConstraints c = new GridBagConstraints();
 
         DefaultListModel<Client> listModel = new DefaultListModel<>();
+        // pega todos os clientes da lista de clientes da reserva
         list = new JList<>(listModel);
             for (Client client : cList) {
                 if(!client.isBanned()) {
@@ -38,6 +39,7 @@ public class ReserveClientsList extends JFrame {
 
             deleteClientBtn = new JButton("Delete Client");
             deleteClientBtn.addActionListener(e -> {
+                // mesma lógica do reserves list.
                 int selectedIndex = list.getSelectedIndex();
 
                 if(selectedIndex >= 0) {

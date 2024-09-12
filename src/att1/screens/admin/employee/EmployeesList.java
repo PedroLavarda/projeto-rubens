@@ -20,6 +20,7 @@ public class EmployeesList extends JFrame {
     }
 
     private void initComponents() {
+        // declara settings basicas das paginas
         setTitle("Employees List");
         setSize(new Dimension(425, 600));
         setLayout(new GridBagLayout());
@@ -28,11 +29,16 @@ public class EmployeesList extends JFrame {
 
         GridBagConstraints c = new GridBagConstraints();
 
+        // declarei um gridbag pra ficar melhor a lista
+
+        //cria a lista de Employee
         DefaultListModel<Employee> listModel = new DefaultListModel<>();
         list = new JList<>(listModel);
         try {
+            // pega todos os employees
             List<Employee> employees = employeeDAO.getAll();
 
+            // coloca só os q estao ativos na lista pra mostrar
             for (Employee employee : employees) {
                 if(employee.isActive()) {
                     listModel.addElement(employee);
@@ -41,16 +47,21 @@ public class EmployeesList extends JFrame {
 
             deleteEmployeeBtn = new JButton("Delete Employee");
             deleteEmployeeBtn.addActionListener(e -> {
+                // pega o employee selecionado
                 int selectedIndex = list.getSelectedIndex();
 
+                // se ele selecionou 1
                 if(selectedIndex >= 0) {
                     int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this employee?",
                             "Warning", JOptionPane.YES_NO_OPTION);
 
+                    // confirmou que quer deletar
                     if (confirm == JOptionPane.YES_OPTION) {
+                        // pega o employee pelo index da lista e pelo selectedIndex que foi o q ele selecionou
                         Employee employee = listModel.get(selectedIndex);
                         employee.setActive(false);
                         try {
+                            // da um update na tabela employees, fazendo com que ele nao esteja mais ativo (CRUD DE UPDATE)
                             employeeDAO.update(employee);
                         } catch (SQLException ex) {
                             ex.printStackTrace();

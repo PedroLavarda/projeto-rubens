@@ -17,11 +17,14 @@ public class ManageReserves extends JFrame {
     }
 
     private void initComponents() {
+        // declara settings da pagina
         setTitle("Reserves Management Page");
         setSize(new Dimension(500, 400));
         setLayout(null);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        // seta os elementos da pagina
 
         maintxt = new JLabel("Reserves Management Page");
         maintxt.setBounds(140, 0, 250, 50);
@@ -29,6 +32,7 @@ public class ManageReserves extends JFrame {
 
         reservesList = new JButton("Reserves List");
         reservesList.setBounds(150, 70, 200, 70);
+        // os botoes todos em todas as ManageEntity, descartam a pagina atual e abrem a nova pagina de acordo com a necessidade;
         reservesList.addActionListener(e -> {
             dispose();
             new ReservesList();

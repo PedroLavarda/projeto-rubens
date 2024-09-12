@@ -20,7 +20,7 @@ public class ClientsList extends JFrame {
     }
 
     private void initComponents() {
-        // inicia as paginas
+        // inicia a pagina
         setTitle("Clients List");
         setSize(new Dimension(530, 600));
         setLayout(new GridBagLayout());
@@ -29,11 +29,15 @@ public class ClientsList extends JFrame {
 
         GridBagConstraints c = new GridBagConstraints();
 
+        // seta uma lista de clientes
         DefaultListModel<Client> listModel = new DefaultListModel<>();
         list = new JList<>(listModel);
         try {
+            // pega todos os clientes do banco
             List<Client> clients = cLientDAO.getAll();
 
+
+            // adiciona na listra criada apenas os que nao estao banidos;
             for (Client client : clients) {
                 if(!client.isBanned()) {
                     listModel.addElement(client);
@@ -42,16 +46,21 @@ public class ClientsList extends JFrame {
 
             deleteClientBtn = new JButton("Delete Client");
             deleteClientBtn.addActionListener(e -> {
+                // pegfa o index do cliente que ele selecionou
                 int selectedIndex = list.getSelectedIndex();
 
                 if(selectedIndex >= 0) {
+                    // se ele escolheu um entra aqui
                     int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this client?",
                             "Warning", JOptionPane.YES_NO_OPTION);
 
                     if (confirm == JOptionPane.YES_OPTION) {
+                        // confirmou que quer deletrar ele acha o cliente na lista pelo selectedIndex
                         Client client = listModel.get(selectedIndex);
+                        // seta ele como banido
                         client.setBanned(true);
                         try {
+                            // update na tabela cliente desse ccliente em especifico, CRUD UPDATE AQUI
                             cLientDAO.update(client);
                         } catch (SQLException ex) {
                             ex.printStackTrace();

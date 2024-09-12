@@ -32,11 +32,13 @@ public class RegisterRoom extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // declara os elementos da pagina
+
         mainTxt = new JLabel("Room Employee Page");
         mainTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
         mainTxt.setBounds(200, 1, 200, 60);
 
-        // informações pessoais do employee
+        // informações pessoais do room
         roomNmbLbl = new JLabel("Room Nmb:");
         roomNmbLbl.setBounds(120, 40, 100, 30);
         descriptionLbl = new JLabel("Description:");
@@ -100,6 +102,7 @@ public class RegisterRoom extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    // só insere o quarto no banco, roomNmb é unique
                     roomDAO.insert(new Room(0, Integer.parseInt(roomNmbField.getText()), descriptionField.getText(), 0.0, RoomType.valueOf(Objects.requireNonNull(roomTypeField.getSelectedItem()).toString()),
                             Double.parseDouble(dailyRateField.getText()), Integer.parseInt(capacityField.getText()), Integer.parseInt(numBedsField.getText()), false));
 ;

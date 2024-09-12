@@ -144,12 +144,15 @@ public class RegisterEmployee extends JFrame {
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // verifica se ele preencheu tudo
                 if(emailField.getText().isBlank() || nameField.getText().isBlank() || new String(passwordField.getPassword()).isBlank()
                 || ageField.getText().isBlank() || cpfField.getText().isBlank() || salaryField.getText().isBlank()) {
                     JOptionPane.showMessageDialog(RegisterEmployee.this, "Please, fill all the required" +
                             "fields before submitting.");
                     return;
                 }
+
+                // verifica se ele preenchheu tudo mas do enedereço
 
                 if(streetField.getText().isBlank() || houseNumberField.getText().isBlank() || countryField.getText().isBlank()
                 || stateField.getText().isBlank() || cityField.getText().isBlank() || zipField.getText().isBlank()) {
@@ -159,12 +162,16 @@ public class RegisterEmployee extends JFrame {
                 }
 
                 try {
+                    // cria um novo endereço
                     Address address = new Address(0, streetField.getText(), Integer.parseInt(houseNumberField.getText()), countryField.getText(),
                             stateField.getText(), cityField.getText(), Integer.parseInt(zipField.getText()));
 
+                    // insere o endereço na tabela de endereços
                     addressDao.insert(address);
+                    // fiz isso pq o endereço na tabela employee tem que ter um id pra funcionar, entao eu tenho que pegar o id do endereço que eu acabei de inserir
                     address = addressDao.getAddress(address);
 
+                    // insere o novo empregado
                     employeeDAO.insert(new Employee(0, nameField.getText(), emailField.getText(), new String(passwordField.getPassword()), Integer.parseInt(ageField.getText()), cpfField.getText(),
                             Double.parseDouble(salaryField.getText()), 10, Date.valueOf(LocalDate.now()), true, address));
 

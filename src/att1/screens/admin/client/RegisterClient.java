@@ -33,11 +33,14 @@ public class RegisterClient extends JFrame {
     }
 
     private void initComponents() {
+        // define settigns basicas da pagina
         setTitle("Register Client");
         setSize(new Dimension(600, 450));
         setLayout(null);
         setLocationRelativeTo(null);
         setResizable(false);
+
+        // define eleentos da pagina
 
         mainTxt = new JLabel("Client Employee Page");
         mainTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -138,12 +141,16 @@ public class RegisterClient extends JFrame {
         submitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // ve se ele preencheu todos os campos do cliente
+
                 if(emailField.getText().isBlank() || nameField.getText().isBlank() || new String(passwordField.getPassword()).isBlank()
                         || ageField.getText().isBlank() || cpfField.getText().isBlank()){
                     JOptionPane.showMessageDialog(RegisterClient.this, "Please, fill all the required" +
                             "fields before submitting.");
                     return;
                 }
+
+                // ve se ele preencheu o endereço
 
                 if(streetField.getText().isBlank() || houseNumberField.getText().isBlank() || countryField.getText().isBlank()
                         || stateField.getText().isBlank() || cityField.getText().isBlank() || zipField.getText().isBlank()) {
@@ -153,12 +160,15 @@ public class RegisterClient extends JFrame {
                 }
 
                 try {
+                    // cria o endereço
                     Address address = new Address(0, streetField.getText(), Integer.parseInt(houseNumberField.getText()), countryField.getText(),
                             stateField.getText(), cityField.getText(), Integer.parseInt(zipField.getText()));
 
+                    // adiciona o endereço no banco e depois pega o id desse que foi adicionado
                     addressDao.insert(address);
                     address = addressDao.getAddress(address);
 
+                    // insere o clieten no banco
                     clientDAO.insert(new Client(0, nameField.getText(), emailField.getText(), new String(passwordField.getPassword()), Integer.parseInt(ageField.getText()), cpfField.getText(),
                             address, false, false, Date.valueOf(LocalDate.now()), "Empty"));
 
