@@ -4,9 +4,10 @@ import att1.dao.DAO;
 import att1.dao.ReserveClientDAO;
 import att1.dao.implementation.ReserveClientDAOImpl;
 import att1.dao.implementation.ReservesDAOImpl;
+import att1.dao.implementation.RoomDAOImpl;
 import att1.entity.Client;
 import att1.entity.Reserve;
-import att1.screens.admin.room.ManageRooms;
+import att1.entity.Room;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,7 @@ public class ReservesList extends JFrame{
 
     protected final DAO<Reserve> reservesDAO = new ReservesDAOImpl();
     protected final ReserveClientDAO reserveClientDAO = new ReserveClientDAOImpl();
+    protected final DAO<Room> roomDAO = new RoomDAOImpl();
 
     public ReservesList () {
         initComponents();
@@ -67,6 +69,10 @@ public class ReservesList extends JFrame{
                                     reserveClientDAO.deleteClientInReserve(client.getId(), reserve.getId());
                                 }
                             }
+
+                            Room room = reserve.getRoom();
+                            room.setReserved(false);
+                            roomDAO.update(room);
 
                             reservesDAO.delete(reserve.getId());
                             listModel.remove(selectedIndex);
