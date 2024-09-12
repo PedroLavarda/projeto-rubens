@@ -1,0 +1,123 @@
+create database if not exists HOTEL;
+
+use HOTEL;
+
+drop table CLIENTS;
+drop table ADDRESS;
+drop table EMPLOYEES;
+drop table RESERVES_CLIENTS;
+drop table RESERVES;
+drop table ROOMS;
+
+CREATE TABLE ADDRESS (
+	id int AUTO_INCREMENT not null,
+	street text not null,
+	house_number int not null UNIQUE,
+	country text,
+	state text,
+	city text,
+	zip_code int,
+
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE CLIENTS (
+	id int AUTO_INCREMENT not null,
+	name varchar(255) not null,
+	email varchar(255) not null,
+	password varchar(255) not null,
+	age int not null,
+	cpf varchar(255) not null UNIQUE,
+	isReserving boolean not null,
+	isBanned boolean not null,
+	lastReservationDate date,
+	employeeNotes varchar(255),
+	id_address int not null,
+
+	PRIMARY KEY(id),
+	CONSTRAINT fk_address_client FOREIGN KEY (id_address) REFERENCES ADDRESS (id)
+);
+
+CREATE TABLE EMPLOYEES (
+	id int AUTO_INCREMENT not null,
+	name varchar(255) not null,
+	email varchar(255) not null,
+	password varchar(255) not null,
+	age int not null,
+	cpf varchar(255) not null UNIQUE,
+	salary double not null,
+	workHours int,
+	hiringDate date,
+	isActive boolean not null,
+	id_address int not null,
+
+	PRIMARY KEY(id),
+	CONSTRAINT fk_employee_address FOREIGN KEY (id_address) REFERENCES ADDRESS (id)
+);
+
+CREATE TABLE ROOMS (
+	id int AUTO_INCREMENT not null,
+	roomNmb int not null UNIQUE,
+	description varchar(255),
+	rating float,
+	roomType varchar(255) not null,
+	dailyRate float,
+	capacity int,
+	numBeds int,
+	isReserved boolean,
+
+	PRIMARY KEY(id)
+);
+
+CREATE TABLE RESERVES (
+	id int AUTO_INCREMENT NOT NULL,
+	price float not null,
+	id_room int not null,
+	initial_date date not null,
+	leaving_date date not null,
+	id_employee int not null,
+
+	PRIMARY KEY (id),
+
+	CONSTRAINT fk_reserve_employee FOREIGN KEY (id_employee) REFERENCES EMPLOYEES (id),
+	CONSTRAINT fk_reserve_room FOREIGN KEY (id_room) REFERENCES ROOMS (id)
+);
+
+CREATE TABLE RESERVES_CLIENTS (
+	id int AUTO_INCREMENT NOT NULL,
+	id_client int not null,
+	id_reserve int not null,
+
+	PRIMARY KEY(id),
+
+	CONSTRAINT fk_client_reserve FOREIGN KEY (id_client) REFERENCES CLIENTS (id),
+	CONSTRAINT fk_reserve_client FOREIGN KEY (id_reserve) REFERENCES RESERVES (id)
+);
+
+
+insert into CLIENTS (name, email, password, age, cpf, isReserving, isBanned)
+VALUES ('Pedro', 'pedro@gmail.com', 'pedro', 18,'09545852917', 1, 1)
+
+insert into EMPLOYEES (name, email, password, age, cpf, salary, isActive)
+VALUES ('Pedro', 'pedro@gmail.com', 'pedro', 18,'09545852917', 10000.0, true)
+
+UPDATE EMPLOYEES SET isActive = true;
+
+SELECT * FROM EMPLOYEES;
+DELETE FROM EMPLOYEES;
+
+SELECT * FROM CLIENTS;
+DELETE FROM CLIENTS;
+
+SELECT * FROM ADDRESS;
+DELETE FROM ADDRESS;
+
+DELETE FROM RESERVES_CLIENTS;
+DELETE FROM RESERVES;
+
+SELECT * FROM RESERVES;
+SELECT * FROM RESERVES_CLIENTS;
+
+SELECT * FROM ROOMS;
+
+INSERT INTO RESERVES (price, id_room, initial_date, leaving_date, id_employee) VALUES (1500, 1,'2024-10-04', '2024-11-06', 1);
