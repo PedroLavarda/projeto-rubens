@@ -10,7 +10,6 @@ import att1.entity.Employee;
 import att1.entity.Reserve;
 import att1.entity.Room;
 import att1.screens.admin.AdminPage;
-import att1.screens.admin.employee.RegisterEmployee;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,10 +36,12 @@ public class RegisterReserve extends JFrame {
     protected final ReserveClientDAO reserveClientDAO = new ReserveClientDAOImpl();
 
     public RegisterReserve() {
+        // inicia a tela
         initComponents();
     }
 
     private void initComponents() {
+        // seta titulo e outrs coisas da tela
         setTitle("Register Reserve");
         setSize(new Dimension(600, 450));
         setLayout(null);
@@ -49,11 +50,13 @@ public class RegisterReserve extends JFrame {
 
         try {
 
+            // inicio da declaracao das partes da tela
+
             mainTxt = new JLabel("Register Reserve Page");
             mainTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
             mainTxt.setBounds(200, 1, 200, 60);
 
-            // informações pessoais do employee
+            // informações pessoais da reserve
             priceLbl = new JLabel("Total price:");
             priceLbl.setBounds(120, 40, 100, 30);
             roomLbl = new JLabel("Room:");
@@ -142,10 +145,14 @@ public class RegisterReserve extends JFrame {
                     Client client = clientDAO.getClientByCpf(clientsField.getText());
                     boolean inList = false;
 
+                    // veririca se o cliente existe ou se ele esta banido
+
                     if(client == null || client.isBanned()) {
                         JOptionPane.showMessageDialog(RegisterReserve.this, "Client is not registered.");
                         return;
                     }
+
+                    // verifica se o cliente esta na lista
 
 
                     for(Client c1 : clients) {
@@ -159,6 +166,8 @@ public class RegisterReserve extends JFrame {
                         JOptionPane.showMessageDialog(RegisterReserve.this, "Client is already in this list of this reservation.");
                         return;
                     }
+
+                    // adiciona o cliente ao array de clientes da reserve
 
                     clients.add(client);
                     JOptionPane.showMessageDialog(RegisterReserve.this, "Client added to the reservation.");
@@ -184,10 +193,13 @@ public class RegisterReserve extends JFrame {
                     Reserve reserve = new Reserve(0, Double.parseDouble(priceField.getText()), room, Date.valueOf(LocalDate.now()),
                             Date.valueOf(LocalDate.now()), employee, clients);
 
+                    // isnere a reserva criada no banco
                     reserveDAO.insert(reserve);
 
+                    // pega o id da reserva
                     int idReserv = reserveDAO.returnReserveId(reserve);
 
+                    // coloca os cliente na tabela de relação da reserva
                     for(Client cc : clients) {
                         reserveClientDAO.insertClientInReserve(cc.getId(), idReserv);
                     }

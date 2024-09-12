@@ -148,6 +148,8 @@ public class ReservesDAOImpl implements ReservesDAO {
         stmt.setDate(4, reserve.getLeavingDate());
         stmt.setInt(5, reserve.getEmployee().getId());
 
+        // pega o resultado e mapeia
+
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
             int eid = rs.getInt("id");
@@ -164,6 +166,8 @@ public class ReservesDAOImpl implements ReservesDAO {
 
             r = new Reserve(eid, price, room, initialDate, leavingDate, employee, clients);
         }
+
+        //retorna o id
         return r.getId();
     }
 }

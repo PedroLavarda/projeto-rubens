@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginPage extends JFrame {
-    private JButton loginButton, adminViewBtn;
+    private JButton loginButton, register;
     private JTextField email;
     private JPasswordField password;
     private JLabel emailLbl, passwordLbl, mainTxtLbl, userTypeLbl;
@@ -57,7 +57,7 @@ public class LoginPage extends JFrame {
                     return;
                 }
 
-                String sql = "select * from CLIENTS where email = ? and password = ?";
+                String sql = "select * from EMPLOYEES where email = ? and password = ?";
 
                 try {
                     PreparedStatement stmt = conn.prepareStatement(sql);
@@ -77,7 +77,7 @@ public class LoginPage extends JFrame {
 
                     dispose();
 
-                    new ClientPage();
+                    new AdminPage();
 
                 } catch (SQLException ex) {
                     System.out.println(ex.getMessage());
@@ -85,14 +85,14 @@ public class LoginPage extends JFrame {
             }
         });
 
-        adminViewBtn = new JButton("Admin View");
-        adminViewBtn.setBounds(200, 200, 100, 40);
-        adminViewBtn.addActionListener(new ActionListener() {
+        register = new JButton("Register");
+        register.setBounds(200, 200, 100, 40);
+        register.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                new AdminPage();
+                new SignUpPage();
             }
         });
 
@@ -102,7 +102,7 @@ public class LoginPage extends JFrame {
         add(passwordLbl);
         add(password);
         add(loginButton);
-        add(adminViewBtn);
+        add(register);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);

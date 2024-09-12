@@ -21,9 +21,13 @@ public class ManageClients extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
+        // inicia a pagina
+
         maintxt = new JLabel("Client Management Page");
         maintxt.setBounds(140, 0, 250, 50);
         maintxt.setFont(new Font("Tahoma", Font.BOLD, 15));
+
+        // inicia os botoes e seus listeners
 
         clientsList = new JButton("Clients List");
         clientsList.setBounds(150, 70, 200, 70);
@@ -45,6 +49,8 @@ public class ManageClients extends JFrame {
             dispose();
             new AdminPage();
         });
+
+        // adiciona os elementos na pagina
 
         add(maintxt);
         add(registerClients);

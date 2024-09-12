@@ -43,7 +43,7 @@ public class RegisterClient extends JFrame {
         mainTxt.setFont(new Font("Tahoma", Font.BOLD, 15));
         mainTxt.setBounds(200, 1, 200, 60);
 
-        // informações pessoais do employee
+        // informações pessoais do cliente
         nameLbl = new JLabel("Name:");
         nameLbl.setBounds(120, 40, 100, 30);
         emailLbl = new JLabel("Email:");

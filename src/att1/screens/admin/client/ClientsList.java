@@ -20,6 +20,7 @@ public class ClientsList extends JFrame {
     }
 
     private void initComponents() {
+        // inicia as paginas
         setTitle("Clients List");
         setSize(new Dimension(530, 600));
         setLayout(new GridBagLayout());
