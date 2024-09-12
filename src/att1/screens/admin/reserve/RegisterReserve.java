@@ -83,6 +83,8 @@ public class RegisterReserve extends JFrame {
                 }
             }
 
+            // as datas infelizmente não estão funcionando. não deu tempo de fazer um date picker.
+
             initialDateField = new JPasswordField();
             initialDateField.setBounds(400, 70, 110, 30);
             leavingDateField = new JTextField();
