@@ -2,17 +2,12 @@ package att1.screens.auth;
 
 import att1.dao.EmployeeDAO;
 import att1.dao.implementation.EmployeeDAOImpl;
-import att1.db.DB;
-import att1.screens.client.ClientPage;
 import att1.screens.admin.AdminPage;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginPage extends JFrame {
