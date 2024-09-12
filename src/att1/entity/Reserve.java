@@ -80,4 +80,9 @@ public class Reserve {
     public void setClients(List<Client> clients) {
         this.clients = clients;
     }
+
+    @Override
+    public String toString() {
+        return getId() + " - " + getPrice() + " - " + getRoom().getRoomNumber() + " - " + getInitialDate() + " - " + getLeavingDate() + " - " + getEmployee().getFullName();
+    }
 }

@@ -1,5 +1,6 @@
 package att1.dao.implementation;
 
+import att1.dao.ClientDAO;
 import att1.dao.DAO;
 import att1.db.DB;
 import att1.entity.Address;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class ClientDAOImpl implements DAO<Client> {
+public class ClientDAOImpl implements ClientDAO {
     @Override
     public Client get(int id) throws SQLException {
         // Abre conexao
@@ -150,5 +151,49 @@ public class ClientDAOImpl implements DAO<Client> {
         // eexecuta a query
         stmt.execute();
         return 0;
+    }
+
+    @Override
+    public Client getClientByCpf(String cpfS) {
+        try {
+            // Abre conexao
+            Connection conn = DB.getConnection();
+
+            // Inicia o resultado client como null
+            Client client = null;
+
+            // Prepara query
+            PreparedStatement stmt = conn.prepareStatement("SELECT c.*, a.id as idaddress, a.street, a.house_number, a.country, a.state, a.city, a.zip_code FROM CLIENTS c " +
+                    "INNER JOIN ADDRESS a ON a.id = c.id_address WHERE cpf = ?");
+
+            // Seta os campos necessarios para query
+            stmt.setString(1, cpfS);
+
+            // Executa a query
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                // Se tiver resultado ele mapeia o resultado aqui, e faz com que o client seja o novo cliente que a gente achou
+                int eid = rs.getInt("id");
+                String fullname = rs.getString("name");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                int age = rs.getInt("age");
+                String cpf = rs.getString("cpf");
+                Address address = new Address(rs.getInt("idaddress"), rs.getString("street"), rs.getInt("house_number"),
+                        rs.getString("country"), rs.getString("state"), rs.getString("city"), rs.getInt("zip_code"));
+                boolean isReserving = rs.getBoolean("isReserving");
+                boolean isBanned = rs.getBoolean("isBanned");
+                Date lastReservationDate = rs.getDate("lastReservationDate");
+                String employeeNotes = rs.getString("employeeNotes");
+                client = new Client(eid, fullname, email, password, age, cpf, address, isReserving, isBanned, lastReservationDate, employeeNotes);
+            }
+
+            // retorna o client, se nao achou nada retorna null
+            return client;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

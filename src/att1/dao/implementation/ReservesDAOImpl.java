@@ -2,6 +2,7 @@ package att1.dao.implementation;
 
 import att1.dao.DAO;
 import att1.dao.ReserveClientDAO;
+import att1.dao.ReservesDAO;
 import att1.db.DB;
 import att1.entity.Client;
 import att1.entity.Employee;
@@ -12,7 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReservesDAOImpl implements DAO<Reserve> {
+public class ReservesDAOImpl implements ReservesDAO {
     DAO<Room> roomDAO = new RoomDAOImpl();
     DAO<Employee> employeeDAO = new EmployeeDAOImpl();
     ReserveClientDAO reserveClientDAO = new ReserveClientDAOImpl();
@@ -96,10 +97,6 @@ public class ReservesDAOImpl implements DAO<Reserve> {
         stmt.setDate(4, reserve.getLeavingDate());
         stmt.setInt(5, reserve.getEmployee().getId());
 
-        for(Client client : reserve.getClients()) {
-            reserveClientDAO.insertClientInReserve(client.getId(), reserve.getId());
-        }
-
         // executa a query
         stmt.execute();
         return 0;
@@ -135,5 +132,38 @@ public class ReservesDAOImpl implements DAO<Reserve> {
         // executa a query
         stmt.execute();
         return 0;
+    }
+
+    @Override
+    public int returnReserveId(Reserve reserve) throws SQLException {
+        Connection conn = DB.getConnection();
+        Reserve r = null;
+
+        // prepara a query
+        PreparedStatement stmt = conn.prepareStatement("SELECT r.* FROM RESERVES r WHERE price = ? and id_room = ? and initial_date = ? and leaving_date = ? and id_employee = ?");
+
+        stmt.setDouble(1, reserve.getPrice());
+        stmt.setInt(2, reserve.getRoom().getId());
+        stmt.setDate(3, reserve.getInitialDate());
+        stmt.setDate(4, reserve.getLeavingDate());
+        stmt.setInt(5, reserve.getEmployee().getId());
+
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            int eid = rs.getInt("id");
+            double price = rs.getDouble("price");
+            int idRoom = rs.getInt("id_room");
+            Date initialDate = rs.getDate("initial_date");
+            Date leavingDate = rs.getDate("leaving_date");
+            int idEmployee = rs.getInt("id_employee");
+
+            Employee employee = employeeDAO.get(idEmployee);
+            Room room = roomDAO.get(idRoom);
+
+            List<Client> clients = reserveClientDAO.findAllClientsInReserve(eid);
+
+            r = new Reserve(eid, price, room, initialDate, leavingDate, employee, clients);
+        }
+        return r.getId();
     }
 }

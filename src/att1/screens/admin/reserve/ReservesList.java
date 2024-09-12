@@ -4,12 +4,9 @@ import att1.dao.DAO;
 import att1.dao.ReserveClientDAO;
 import att1.dao.implementation.ReserveClientDAOImpl;
 import att1.dao.implementation.ReservesDAOImpl;
-import att1.dao.implementation.RoomDAOImpl;
 import att1.entity.Client;
 import att1.entity.Reserve;
-import att1.entity.Room;
 import att1.screens.admin.room.ManageRooms;
-import att1.screens.admin.room.RoomsList;
 
 import javax.swing.*;
 import java.awt.*;
@@ -58,11 +55,15 @@ public class ReservesList extends JFrame{
                         try {
                             List<Client> clients = reserveClientDAO.findAllClientsInReserve(reserve.getId());
 
-                            for (Client client : clients) {
-                                reserveClientDAO.deleteClientInReserve(client.getId(), reserve.getId());
+                            if(clients != null) {
+                                for (Client client : clients) {
+                                    reserveClientDAO.deleteClientInReserve(client.getId(), reserve.getId());
+                                }
                             }
 
                             reservesDAO.delete(reserve.getId());
+                            listModel.remove(selectedIndex);
+                            JOptionPane.showMessageDialog(null, "Reserves deleted successfully", "Warning", JOptionPane.INFORMATION_MESSAGE);
                         } catch (SQLException ex) {
                             ex.printStackTrace();
                         }

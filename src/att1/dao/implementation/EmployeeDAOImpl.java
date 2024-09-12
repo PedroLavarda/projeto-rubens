@@ -23,7 +23,7 @@ public class EmployeeDAOImpl implements DAO<Employee> {
 
         // prepara a query
         PreparedStatement stmt = conn.prepareStatement("SELECT e.*, a.id as idaddress, a.street, a.house_number, a.country, a.state, a.city, a.zip_code FROM EMPLOYEES e " +
-                "INNER JOIN ADDRESS a ON a.id = e.id_address WHERE id = ?");
+                "INNER JOIN ADDRESS a ON a.id = e.id_address WHERE e.id = ?");
 
         // seta os atributos da query
         stmt.setInt(1, id);
@@ -33,7 +33,7 @@ public class EmployeeDAOImpl implements DAO<Employee> {
         if (rs.next()) {
             // se tiver resultado ele mapeia o empregado e seta ele como a variavel employee
             int eid = rs.getInt("id");
-            String fullname = rs.getString("fullName");
+            String fullname = rs.getString("name");
             String email = rs.getString("email");
             String password = rs.getString("password");
             int age = rs.getInt("age");
