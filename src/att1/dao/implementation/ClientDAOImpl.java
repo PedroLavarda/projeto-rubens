@@ -25,7 +25,7 @@ public class ClientDAOImpl implements ClientDAO {
 
         // Prepara query
         PreparedStatement stmt = conn.prepareStatement("SELECT c.*, a.id as idaddress, a.street, a.house_number, a.country, a.state, a.city, a.zip_code FROM CLIENTS c " +
-                "INNER JOIN ADDRESS a ON a.id = c.id_address WHERE id = ?");
+                "INNER JOIN ADDRESS a ON a.id = c.id_address WHERE c.id = ?");
 
         // Seta os campos necessarios para query
         stmt.setInt(1, id);

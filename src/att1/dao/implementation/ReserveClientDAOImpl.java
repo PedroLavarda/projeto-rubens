@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReserveClientDAOImpl implements ReserveClientDAO {
@@ -19,7 +20,7 @@ public class ReserveClientDAOImpl implements ReserveClientDAO {
     public List<Client> findAllClientsInReserve(int idReserve) throws SQLException {
         // Abre Conexao com o banco
         Connection conn = DB.getConnection();
-        List<Client> clients = null;
+        List<Client> clients = new ArrayList<>();
 
         // Prepara a query
         PreparedStatement stmt = conn.prepareStatement("SELECT id_client FROM RESERVES_CLIENTS WHERE id_reserve = ?");

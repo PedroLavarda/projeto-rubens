@@ -76,7 +76,7 @@ public class ReservesList extends JFrame{
             returnBtn = new JButton("Return");
             returnBtn.addActionListener(e -> {
                 dispose();
-                new ManageRooms();
+                new ManageReserves();
             });
 
             add(list, c);
